@@ -1,6 +1,6 @@
 import streamlit as st
-# import torch
-# from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
+import torch
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
 # Header
 st.write("<h3 align='center'>Inshort News Summarization using Bidirectional and Auto-Regressive Transformers (BART)</h3>", unsafe_allow_html=True)

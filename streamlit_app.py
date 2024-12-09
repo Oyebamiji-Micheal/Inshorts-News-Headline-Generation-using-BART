@@ -1,14 +1,8 @@
 import streamlit as st
+# import torch
+# from transformers import AutoModelForSeq2SeqLM, AutoTokenizer, pipeline
 
-from transformers import (
-    AutoModelForSeq2SeqLM,
-    AutoTokenizer,
-    DataCollatorForSeq2Seq, 
-    Seq2SeqTrainer,
-    Seq2SeqTrainingArguments,
-    pipeline
-)
-
+# Header
 st.write("<h3 align='center'>Inshort News Summarization using Bidirectional and Auto-Regressive Transformers (BART)</h3>", unsafe_allow_html=True)
 
 st.write("""
@@ -22,8 +16,9 @@ st.write("""
 <p align="justify">
     This project involves fine-tuning the BART (Bidirectional and Auto-Regressive Transformers) model for the task of generating abstractive summaries of news articles. The model is trained on the Inshorts news dataset, which consists of news articles from various categories such as sports, technology, entertainment, and more. You can try out the model by entering a news article in the input box below and clicking the 'Summarize' button. The model will generate a summary of the input article, which you can compare with the original article to see how well it captures the key points.
 </p> 
-""", unsafe_allow_html=True)         
+""", unsafe_allow_html=True)
 
+# Function to compare summaries
 def compare_summaries(input_text):
     # Load the original BART model and tokenizer
     bart_ckpt = "facebook/bart-base"
@@ -43,11 +38,15 @@ def compare_summaries(input_text):
     
     return original_summary, finetuned_summary
 
+# Input text
 input_text = st.text_area("Enter a news article to summarize:")
 
+# Button and spinner
 if st.button("Summarize"):
     if input_text:
-        original_summary, finetuned_summary = compare_summaries(input_text)
+        with st.spinner("Generating summaries, please wait..."):
+            original_summary, finetuned_summary = compare_summaries(input_text)
+        st.success("Summaries generated!")
         st.write("#### === Original BART Summary ===")
         st.write(original_summary[0]['summary_text'])
         st.write("#### === Fine-tuned BART Summary ===")
